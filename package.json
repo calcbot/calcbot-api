@@ -1,0 +1,26 @@
+{
+  "name": "calcbot-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:prod": "esbuild ./*.ts --bundle --platform=node --outdir=dist --external:@aws-sdk/client-cognito-identity-provider --external:@aws-sdk/client-s3 --external:@aws-sdk/s3-request-presigner --external:@aws-sdk/client-sns --external:@aws-sdk/util-dynamodb --external:@aws-sdk/client-dynamodb && cd dist && zip -r lambda.zip * > /dev/null && aws --profile heythisischris lambda update-function-code --function-name calcbot-api --zip-file \"fileb://lambda.zip\" > /dev/null && rm -rf lambda.zip",
+    "build:staging": "esbuild ./*.ts --bundle --platform=node --outdir=dist --external:@aws-sdk/client-cognito-identity-provider --external:@aws-sdk/client-s3 --external:@aws-sdk/s3-request-presigner --external:@aws-sdk/client-sns --external:@aws-sdk/util-dynamodb --external:@aws-sdk/client-dynamodb && cd dist && zip -r lambda.zip * > /dev/null && aws --profile heythisischris lambda update-function-code --function-name calcbot-api-staging --zip-file \"fileb://lambda.zip\" > /dev/null && rm -rf lambda.zip"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.465.0",
+    "aws-jwt-verify": "^4.0.0",
+    "openai": "^4.26.0",
+    "serverless-postgres": "^2.1.0",
+    "stripe": "^14.14.0"
+  },
+  "imports": {
+    "#src/*": "./*"
+  },
+  "type": "module",
+  "devDependencies": {
+    "esbuild": "^0.19.4"
+  }
+}
